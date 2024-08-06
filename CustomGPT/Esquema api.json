@@ -1,0 +1,113 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Google Ads API",
+      "description": "API for accessing Google Ads services, including Keyword Planner.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://googleads.googleapis.com"
+      }
+    ],
+    "paths": {
+      "/v9/customers/{customerId}/keywordPlans:generateForecastMetrics": {
+        "post": {
+          "summary": "Generate Keyword Forecast Metrics",
+          "description": "Generates forecast metrics for a given keyword plan.",
+          "operationId": "generateForecastMetrics",
+          "parameters": [
+            {
+              "name": "customerId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "The ID of the customer account."
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "keywordPlan": {
+                      "type": "string",
+                      "description": "The resource name of the keyword plan."
+                    }
+                  },
+                  "required": ["keywordPlan"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with forecast metrics.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "metrics": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "keyword": {
+                              "type": "string"
+                            },
+                            "avgMonthlySearches": {
+                              "type": "integer"
+                            },
+                            "competition": {
+                              "type": "string"
+                            },
+                            "topOfPageBidLowRange": {
+                              "type": "string"
+                            },
+                            "topOfPageBidHighRange": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "oauth2": {
+          "type": "oauth2",
+          "flows": {
+            "authorizationCode": {
+              "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+              "tokenUrl": "https://oauth2.googleapis.com/token",
+              "scopes": {
+                "https://www.googleapis.com/auth/adwords": "Google Ads API access"
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "oauth2": []
+      }
+    ]
+  }
